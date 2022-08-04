@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { environment } from '../environments/environment'
-import { filter, map } from 'rxjs/operators'
-import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'
+import * as _ from 'lodash'
 
 export interface Tender {
   id: number
@@ -27,8 +27,23 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {
   }
 
-  async ngOnInit() {
+  async ngOnInit() {    
+    this.pageRefresh()
+  }
+
+  async home() { 
+    if (this.phrase?.length == null) {
+      this.pageRefresh()
+    }
+  }
+
+  async pageRefresh() {
     this.tender = await this.get()
+    this.tender.sort((a,b) => {
+      let date1 = new Date(a.date);
+      let date2 = new Date(b.date);
+      return date2.getTime() - date1.getTime();
+    })
     this.homeRecords = this.tender?.slice(0, 10);
   }
 

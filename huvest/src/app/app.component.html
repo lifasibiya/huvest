@@ -1,13 +1,18 @@
 <div class="container">
-    <div class="">
-        <div class="input justify-content-end">
-            <input type="text" [(ngModel)]="phrase" placeholder="Search title or description" (ngModelChange)="search(phrase)">
-        </div>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand">Huvest</a>
+            </div>
+        </nav>
+    </header>
+    <div class=" d-flex justify-content-end">
+        <input type="text" [(ngModel)]="phrase" onfocus="this.value=''" placeholder="Search title or description" (ngModelChange)="pageRefresh()">
         <div class="btn">
             <button type="button" class="btn btn-primary" (click)="search(phrase)">search</button>
         </div>
     </div>
-    <table class="table-stripped">
+    <table class="table table-striped">
         <thead class="bg-dark text-light table-responsive-lg">
             <tr>
                 <th>Number</th>
@@ -26,9 +31,9 @@
         </tbody>
         <tbody *ngIf="searchData.length > 0">
             <tr *ngFor="let t of searchData">
-                <td>{{ t.id }}</td>
-                <td>{{t.date}}</td>
-                <td>{{t.title}}</td>
+                <td class="col">{{ t.id }}</td>
+                <td class="col">{{t.date}}</td>
+                <td class="col">{{t.title}}</td>
                 <td>{{t.description}}</td>
             </tr>
         </tbody>
